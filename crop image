@@ -1,0 +1,15 @@
+pic= imread("C:\Users\杰\Desktop\1s_0001.jpeg");
+%pic=p(:,:,1);
+%imshow(pic);
+[x,y] = ginput(2);    %确定图像上的两点利用ginput函数，返回值是两点的坐标
+pic_1 = imcrop(pic,[x(1),y(1),abs(x(1)-x(2)),abs(y(1)-y(2))]);
+%x(1)=550;
+%x(2)=710;
+%y(1)=420;
+%y(2)=580;
+%利用imcrop函数对图像进行切割，输入参数是一个定点坐标，
+
+%从该定点出发向右abs(x(1)-x(2))，向下abs(y(1)-y(2))的区域进行切割
+
+figure,imshow(pic_1);
+%imwrite(pic_1,"C:\Users\杰\Desktop\SB\SB\3.10\jiequwei3.jpg");
