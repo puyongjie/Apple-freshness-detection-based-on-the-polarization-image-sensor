@@ -1,0 +1,53 @@
+clear,close all;
+pic = imread("D:\Program Files (x86)\Tencent\WeChat\document\WeChat Files\wxid_xtlw5rv873zg22\FileStorage\File\2023-03\data1\0.jpg");
+figure;450
+subplot(2,2,1),imshow(pic),title('原图'); %显示原图
+[rows, cols, colors] = size(pic);
+pic_gray = zeros(rows, cols);
+pic_gray = uint8(pic_gray);
+
+for i = 1:rows
+    for j = 1:cols
+       I(i, j) = pic(i, j, 1)*0.30 + pic(i, j, 2)*0.59 + pic(i, j, 3)*0.11;
+    end
+end
+subplot(2,2,2),imshow(I),title('平均值灰度化');
+
+%% 检测整个叶片
+[~,threshold] = edge(I,'sobel');
+fudgeFactor = 0.7;
+BWs = edge(I,'sobel',threshold * fudgeFactor);
+subplot(2,2,3),imshow(BWs),title('二元梯度掩膜');%显示生成的二元梯度掩膜
+%% 膨胀图像
+se90 = strel('line',3,90);
+se0 = strel('line',3,0);
+BWsdil = imdilate(BWs,[se90 se0]);
+subplot(2,2,4),imshow(BWsdil),title('膨胀梯度掩膜')
+%% 填补内部空隙
+BWdfill = imfill(BWsdil,'holes');
+figure;
+subplot(2,2,1),imshow(BWdfill),title('填充后的图像');
+%% 删除边界上的连通对象
+BWnobord = imclearborder(BWdfill,4);
+subplot(2,2,2),imshow(BWnobord),title('删除边界连通对象');
+%% 平滑处理对象
+seD = strel('diamond',1);
+BWfinal = imerode(BWnobord,seD);
+BWfinal = imerode(BWfinal,seD);
+subplot(2,2,3),imshow(BWfinal)
+title('平滑后的图像');
+%% 求RGB均值
+S = sum(sum(BWfinal == 1));%分母
+target = find(BWfinal == 0);%确定目标区域
+R = pic(:,:,1);
+G = pic(:,:,2);
+B = pic(:,:,3);
+R(target) = 0;
+G(target) = 0;
+B(target) = 0;
+SR = sum(sum(R));
+SG = sum(sum(G));
+SB = sum(sum(B));
+AR = SR/S;
+AG = SG/S;
+AB = SB/S;
