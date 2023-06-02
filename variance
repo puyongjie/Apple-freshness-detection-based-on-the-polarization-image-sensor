@@ -1,0 +1,19 @@
+clc;%clc的作用就是清屏幕
+clear;%clear是删除所有的变量
+close all;%close all是将所有打开的图片关掉。
+i=imread("C:\Users\杰\Desktop\智能判断\散斑\SB\5.21\二分之一波片\20.bmp"); %载入真彩色图像路径
+%i=rgb2gray(i); %转换为灰度图
+i=double(i);  %将uint8型转换为double型，否则不能计算统计量
+%i=abs(i-min(i))/(max(i)-min(i));
+avg=mean2(i);  %求图像均值
+[m,n]=size(i);
+s=0;
+for x=1:m
+    for y=1:n
+    s=s+(i(x,y)-avg)^2; %求得所有像素与均值的平方和。
+    end
+end
+%求图像的方差
+a1=var(i(:)); %第一种方法：利用函数var求得。
+a2=s/(m*n-1); %第二种方法：利用方差公式求得
+a3=(std2(i))^2; %第三种方法：利用std2求得标准差，再平方即为方差。
