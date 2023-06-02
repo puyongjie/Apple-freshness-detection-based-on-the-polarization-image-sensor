@@ -1,0 +1,29 @@
+A=imread("C:\Users\杰\Desktop\肥肠数据\1\尾\70\0.bmp");
+a=rgb2gray(A);
+B=imread("C:\Users\杰\Desktop\肥肠数据\1\尾\70\45.bmp");
+b=rgb2gray(B);
+C=imread("C:\Users\杰\Desktop\肥肠数据\1\尾\70\90.bmp");
+c=rgb2gray(C);
+D=imread("C:\Users\杰\Desktop\肥肠数据\1\尾\70\135.bmp");
+d=rgb2gray(D);
+a=im2double(a);
+b=im2double(b);
+c=im2double(c);
+d=im2double(d);
+e=imadd(a,c); %进行两幅图像的加法运算，生成叠加图像效果
+%e=a+c;
+f=imabsdiff(a,c);
+%f=a-c;
+%f=imsubtract(a,c);
+g=imabsdiff(b,d);
+%j=imdivide(f,e);
+j=sqrt((f.^2+g.^2)./e.^2);
+%H=sqrt(j);
+%使用空矩阵[],imshow将[min(I(:)) max(I(:))] 作为显示范围，即将 I 中的最小值显示为黑色，将最大值显示为白色
+subplot(3,3,1);  imshow(a);  title('图A');
+subplot(3,3,2);  imshow(b);  title('图B');
+subplot(3,3,3);  imshow(e);  title('图A与图C叠加');
+subplot(3,3,4);  imshow(f);  title('图A与图C差分');
+subplot(3,3,5);  imshow(g);  title('图B与图D差分');
+subplot(3,3,6);  imshow(j);  title("greenDOLP");
+imwrite(j,"C:\Users\杰\Desktop\肥肠数据\1\尾\70\grayDOLP.jpg");
