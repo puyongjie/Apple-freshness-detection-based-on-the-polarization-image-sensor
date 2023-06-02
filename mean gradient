@@ -1,0 +1,18 @@
+%平均梯度
+clc;
+clear;
+close all;
+img = imread("C:\Users\杰\Desktop\三通道\蓝通道\蓝通道绿苹果的截取\8.9\DOLP1.jpg");
+img = im2double(img);
+ 
+[~,~,imxy] = my_gradient(img);
+s1 = mean(imxy(:));
+disp(s1);
+ 
+function [imx,imy,imnorm] = my_gradient(im)
+ 
+imx = [im(:,end,:) - im(:, 1,:),-diff(im,1,2)];
+imy = [im(end,:,:) - im(1, :,:);-diff(im,1,1)];
+imnorm = sqrt(imx.^2 + imy.^2);
+ 
+end
