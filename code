@@ -1,0 +1,17 @@
+close all;1
+clc;
+i=imread("C:\Users\杰\Desktop\新水果\原图得到的红通道\（红通道）截取左手边拍摄图的右绿苹果\11.2\l90.jpg"); %载入灰度图像
+i=i(:,:,2);
+i=double(i);  %将uint8型转换为double型，否则不能计算统计量
+% avg1=mean(i,1); %列向量均值
+% avg2=mean(i,2); %行向量均值
+% avg3=mean(i); %列向量均值
+[m,n]=size(i);
+s=0;
+for x=1:m
+    for y=1:n
+        s=s+i(x,y); %求像素值总和 s
+    end
+end
+%所有像素均值
+a=mean(mean(i))%先计算列向量均值，再求总均值。
