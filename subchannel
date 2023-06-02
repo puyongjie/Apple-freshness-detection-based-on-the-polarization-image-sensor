@@ -1,0 +1,31 @@
+a=imread("C:\Users\杰\Desktop\肥肠数据\肥肠11\大\白光\70\90.jpg");
+%提取图像三通道信息
+channel_1=a;
+channel_2=a;
+channel_3=a;
+% 第一幅图的G B通道的灰度值全部变成0 这样就只有R通道的了
+channel_1(:,:,2)=0;
+channel_1(:,:,3)=0;
+
+channel_2(:,:,1)=0;
+channel_2(:,:,3)=0;
+
+channel_3(:,:,1)=0;
+channel_3(:,:,2)=0;
+
+% 显示图像
+subplot(2,2,1);
+imshow(channel_1,[]);
+title('R通道');
+subplot(2,2,2);
+imshow(channel_2,[]);
+title('G通道');
+subplot(2,2,3);
+imshow(channel_3,[]);
+title('B通道');
+subplot(2,2,4);
+imshow(a,[]);
+title('原图');
+imwrite(channel_1,"C:\Users\杰\Desktop\肥肠数据\肥肠11\大\白光\70\红\90.jpg");
+imwrite(channel_2,"C:\Users\杰\Desktop\肥肠数据\肥肠11\大\白光\70\绿\90.jpg");
+imwrite(channel_3,"C:\Users\杰\Desktop\肥肠数据\肥肠11\大\白光\70\蓝\90.jpg");
